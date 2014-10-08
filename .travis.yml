@@ -8,4 +8,12 @@ php:
   - 5.6
   - hhvm
 
-script: phpunit --bootstrap src/autoload.php tests/TextsTest.php
+before_script:
+- composer install --dev --no-interaction
+
+script:
+- mkdir -p build/logs
+- phpunit --coverage-clover build/logs/clover.xml --bootstrap src/autoload.php tests/TextsTest.php
+
+after_script:
+  - php vendor/bin/coveralls
